@@ -6,3 +6,5 @@
 #
 Flask==0.12
 gunicorn==19.7.1
+SQLAlchemy==1.1.9
+psycopg2==2.7.1

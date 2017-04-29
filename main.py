@@ -7,15 +7,15 @@ This is the main module of yourCMDB2, wich starts the application
 :license: MIT, see LICENSE for more details
 :copyright: (c) 2017 by Michael Batz, see AUTORS for more details
 """
-import web.gunicornsupport
-import web.dispatcher
+import yourcmdb2.web.gunicornsupport as gunicornsupport
+import yourcmdb2.web.dispatcher as dispatcher
 
 def main():
     webapp_conf = {
         "bind": "0.0.0.0:5000",
         "workers": "2"
     }
-    webapp = web.gunicornsupport.WebApplication(web.dispatcher.app, webapp_conf)
+    webapp = gunicornsupport.WebApplication(dispatcher.app, webapp_conf)
     webapp.run()
     print("Hello World")
 
