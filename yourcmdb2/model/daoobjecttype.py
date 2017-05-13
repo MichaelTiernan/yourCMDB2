@@ -4,15 +4,50 @@ yourCMDB2 model cmdbobjecttype module
 This module is part of the yourCMDB2 model and defines the CMDB Object Types
 
 :license: MIT, see LICENSE for more details
-:copyright: (c) 2017 by Michael Batz, see AUTORS for more details
+:copyright: (c) 2017 by Michael Batz, see AUTHORS for more details
 """
 
-import sqlalchemy
+from sqlalchemy import ForeignKey, ForeignKeyConstraint, Column, String, Integer
+from sqlalchemy.types import Boolean
+from sqlalchemy.orm import relationship
 from .ormbase import Base
 
 class CmdbObjectType(Base):
 
-    __tablename__ = "cmdbobject_type"
+    __tablename__ = "objecttype"
 
-    cmdbobjecttype_id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
-    cmdbobjecttype_label = sqlalchemy.Column(sqlalchemy.String)
+    objecttype_id = Column(Integer, primary_key=True)
+    objecttype_summarystring = Column(String)
+    objecttype_label = Column(String)
+    objecttype_comment = Column(String)
+
+    fields = relationship("CmdbObjectTypeField", cascade="all, delete-orphan")
+    links = relationship("CmdbObjectTypeLink", cascade="all, delete-orphan")
+
+
+class CmdbObjectTypeField(Base):
+
+    __tablename__ = "objecttype_field"
+
+    field_objecttype = Column(Integer, ForeignKey("objecttype.objecttype_id"), primary_key=True)
+    field_name = Column(String, primary_key=True)
+    field_group = Column(String)
+    field_order = Column(Integer)
+    field_type = Column(String)
+    field_summary = Column(Boolean)
+    field_constraint = Column(String)
+
+    objecttype = relationship("CmdbObjectType")
+
+
+class CmdbObjectTypeLink(Base):
+
+    __tablename__ = "objecttype_link"
+
+    link_id = Column(Integer, primary_key=True)
+    link_objecttype = Column(Integer, ForeignKey("objecttype.objecttype_id"), primary_key=True)
+    link_order = Column(Integer)
+    link_label = Column(String)
+    link_url = Column(String)
+
+    objecttype = relationship("CmdbObjectType")
