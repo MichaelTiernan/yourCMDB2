@@ -21,8 +21,9 @@ class CmdbObjectType(Base):
     objecttype_label = Column(String)
     objecttype_comment = Column(String)
 
-    fields = relationship("CmdbObjectTypeField", cascade="all, delete-orphan")
-    links = relationship("CmdbObjectTypeLink", cascade="all, delete-orphan")
+    related_fields = relationship("CmdbObjectTypeField", cascade="all, delete-orphan")
+    related_links = relationship("CmdbObjectTypeLink", cascade="all, delete-orphan")
+    related_objects = relationship("CmdbObject", cascade="all, delete-orphan")
 
 
 class CmdbObjectTypeField(Base):
@@ -33,11 +34,13 @@ class CmdbObjectTypeField(Base):
     field_name = Column(String, primary_key=True)
     field_group = Column(String)
     field_order = Column(Integer)
+    field_label = Column(String)
     field_type = Column(String)
     field_summary = Column(Boolean)
     field_constraint = Column(String)
 
-    objecttype = relationship("CmdbObjectType")
+    related_objecttype = relationship("CmdbObjectType")
+    related_objectfields = relationship("CmdbObjectField", cascade="all, delete-orphan") 
 
 
 class CmdbObjectTypeLink(Base):
@@ -50,4 +53,4 @@ class CmdbObjectTypeLink(Base):
     link_label = Column(String)
     link_url = Column(String)
 
-    objecttype = relationship("CmdbObjectType")
+    related_objecttype = relationship("CmdbObjectType")

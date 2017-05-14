@@ -12,6 +12,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from .. import config
 from .ormbase import Base
 from . import daoobjecttype
+from . import daoobject
 
 
 class OrmHelper(object):
