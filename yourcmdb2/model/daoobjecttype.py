@@ -48,7 +48,7 @@ class CmdbObjectTypeLink(Base):
     __tablename__ = "objecttype_link"
 
     link_id = Column(Integer, primary_key=True)
-    link_objecttype = Column(Integer, ForeignKey("objecttype.objecttype_id"), primary_key=True)
+    link_objecttype = Column(Integer, ForeignKey("objecttype.objecttype_id"))
     link_order = Column(Integer)
     link_label = Column(String)
     link_url = Column(String)
